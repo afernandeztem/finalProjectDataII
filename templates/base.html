@@ -1,0 +1,295 @@
+<html lang="es">
+<head>
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.ico"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet"/>
+    {% block head %}
+    {% endblock %}
+</head>
+<body style="background-color: lightgray;">
+<!-- Header -->
+<div style="position: relative; min-height: 100vh;">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between" style="margin-bottom: 0;">
+            <a class="navbar-brand text-info text-uppercase" href="/"><h1>Analizador del Mercado de Apps</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown" style="margin-right: 35px;">
+                        <a style="margin-right: 35px;" class="nav-link dropdown-toggle" href="#"
+                           id="navbarDropdownMenuLink"
+                           role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">{{ user.name }}</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/logout">Cerrar sesión</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header text-center">
+                <h3>Operaciones</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="verEstadisticas()">Estad&iacute;sticas del
+                        sistema</a>
+                </li>
+                <li>
+                    <a href="#homeSubMenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Consultas
+                        n&uacute;mericas</a>
+                    <ul class="collapse list-unstyled text-left" id="homeSubMenu2" style="font-size: smaller;">
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(20,this.innerText)">N&uacute;mero de aplicaciones&nbsp;<br>por
+                                content rating
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(21,this.innerText)">N&uacute;mero de aplicaciones&nbsp;<br>por
+                                genero
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Consultas
+                        de precios</a>
+                    <ul class="collapse list-unstyled text-left" id="homeSubmenu" style="font-size: smaller;">
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaBasica(false, 0, this.innerText)">Histograma del precio&nbsp;<br>de las
+                                aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(0, this.innerText)">Precio medio de&nbsp;<br>las aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(1, this.innerText)">Precio medio de
+                                las&nbsp;<br>aplicaciones&nbsp;<br>sin outlier
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(2, this.innerText)">Precio medio de
+                                las&nbsp;<br>aplicaciones&nbsp;<br>de pago
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(3, this.innerText)">Precio medio de
+                                las&nbsp;<br>aplicaciones&nbsp;<br>de pago sin outlier
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(4,this.innerText)">Precio medio de las&nbsp;<br>aplicaciones
+                                coincidentes
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(5,this.innerText)">Precio medio de las&nbsp;<br>aplicaciones<br>coincidentes
+                                de pago
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(6,this.innerText)">Precio medio de las&nbsp;<br>aplicaciones por
+                                genero
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(7,this.innerText)">Precio medio de las&nbsp;<br>aplicaciones por&nbsp;<br>genero
+                                sin outliers
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(16,this.innerText)">Precio medio de las&nbsp;<br>aplicaciones
+                                por&nbsp;<br>content rating
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(17,this.innerText)">Precio medio de las&nbsp;<br>aplicaciones
+                                por&nbsp;<br>content rating sin outliers
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzadaConParametros(22,this.innerText)">Precio medio de&nbsp;<br>las aplicaciones&nbsp;<br>
+                                por genero y&nbsp;<br>un content rating sin outliers
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Consultas
+                        de tama&ntilde;o</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu"
+                        style="font-size: smaller;">
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaBasica(false, 1, this.innerText)">Histograma del tama&ntilde;o&nbsp;<br>de
+                                las aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(8,this.innerText)">Tama&ntilde;o medio&nbsp;<br>de las
+                                aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(9,this.innerText)">Tama&ntilde;o medio de&nbsp;<br>las
+                                aplicaciones coincidentes
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzadaConParametros(23,this.innerText)">Tamaño medio de&nbsp;<br>las aplicaciones
+                               &nbsp;<br> por genero y&nbsp;<br>un content rating
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Consultas
+                        de ratings</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu2">
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaBasica(false, 2,  this.innerText)">Histograma del rating&nbsp;<br>de las
+                                aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(12,this.innerText)">Rating medio de&nbsp;<br>las aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(13,this.innerText)">Rating medio de&nbsp;<br>las aplicaciones
+                                coincidentes
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(14,this.innerText)">Rating medio de&nbsp;<br>las
+                                aplicaciones&nbsp;<br>por el g&eacute;nero
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(18,this.innerText)">Rating medio de&nbsp;<br>las
+                                aplicaciones&nbsp;<br>por el content rating
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzadaConParametros(25,this.innerText)">Rating medio de&nbsp;<br>las aplicaciones&nbsp;<br>por genero y&nbsp;<br>un content rating
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Consultas
+                        del n&uacute;mero<br> de ratings</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu3">
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaBasica(false, 3, this.innerText)">Histograma por n&uacute;mero
+                                de&nbsp;<br>las valoraciones totales&nbsp;<br>de las aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(10,this.innerText)">N&uacute;mero de rating totales de&nbsp;<br>las
+                                aplicaciones
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(11,this.innerText)">N&uacute;mero de rating totales de&nbsp;<br>las
+                                aplicaciones coincidentes
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(19,this.innerText)">N&uacute;mero de rating totales&nbsp;<br>de
+                                las aplicaciones&nbsp;<br>por content rating
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzada(15,this.innerText)">N&uacute;mero de rating totales&nbsp;<br>de
+                                las aplicaciones&nbsp;<br>por g&eacute;nero
+                            </button>
+                        </li>
+                         <li>
+                            <button class="btn btn-link text-left" style="color: black !important;"
+                                    onclick="consultaAvanzadaConParametros(24,this.innerText)">N&uacute;mero de rating medio&nbsp;<br>de
+                                las aplicaciones&nbsp;<br>por genero y&nbsp;<br>un content rating
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content-base">
+            <div id="content" style="margin-bottom: 2%;">
+                <h2 class="text-center">{% block nombre %}
+                {% endblock %}</h2>
+                <hr>
+                {% block content %}
+                {% endblock %}
+            </div>
+            {% include "footer.html" %}
+        </div>
+    </div>
+    <div id="loader" class="loader" style="display: none;"></div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"
+        integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+<script>
+    $(function () {
+        verEstadisticas();
+    });
+</script>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<link rel="stylesheet" href="/css/stylesNavbar.css">
+<link href="/c3/c3.css" rel="stylesheet">
+{% endblock %}
+
+{% block nombre %}
+<span id="estadisticaNombre"
+      style="display: none">Estad&iacute;sticas gen&eacute;ricas de la colecci&oacute;n <b><i>App</i></b></span>
+<span id="graficaNombre" style="display: none">Gr&aacute;ficas</span>
+{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 5px;">
+    <div id="estadisticas" style="display: none"></div>
+
+
+    <div id="basicasSinParametros" style="display: none">
+
+    </div>
+
+
+    <div id="avanzadasSinParametros" style="display: none"></div>
+
+    <div id="avanzadasConParamtros" style="display: none; margin-bottom: 10px;">
+        <h5>Selecciona el valor del content_rating</h5>
+        <input hidden id="consulta">
+        <input hidden id="consultaText">
+        <select class="select2-js form-control" name="content_rating" id="content_rating" onchange="cargaGraficaContentRating(this.value)">
+            <option selected disabled value>No seleccionado</option>
+            {% for c in content_ratings %}
+                <option value="{{ c }}">{{ c }}</option>
+            {%  endfor %}
+        </select>
+    </div>
+
+    <div id="chart" style="background-color: whitesmoke;display: none; max-width: 95%"></div>
+    <div id="chart2" style="background-color: whitesmoke;display: none; max-width: 95%; margin-top: 2.5%; margin-bottom: 5px;"></div>
+
+
+</div>
+<div>
+&nbsp;
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="/c3/c3.min.js"></script>
+<script type="text/javascript" src="/js/utils.js"></script>
+<script type="text/javascript" src="/js/dibujar.js"></script>
+<script type="text/javascript" src="/js/consultas.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+{% endblock %}
