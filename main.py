@@ -22,8 +22,8 @@ os.environ['PROJECT_ID'] = "cienciadatosii"
 
 class Auth:
     """Google Project Credentials"""
-    CLIENT_ID = '959238646319-pfmg2ngib6ul6d5b772gl4pd4s86mal1.apps.googleusercontent.com'
-    CLIENT_SECRET = 'hGjmzcHpQflfretJhcD1SgXe'
+    CLIENT_ID = 'XXX'
+    CLIENT_SECRET = 'XXX'
     REDIRECT_URI = 'https://localhost:5000/gCallback'
     AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
